@@ -1,8 +1,76 @@
 body {
   margin: 0;
   overflow: hidden;
+  font-family: sans-serif;
 }
+
 #board {
   background: white;
   display: block;
+  touch-action: none;   /* prevents scrolling while drawing */
+}
+
+/* Floating toolbar */
+#toolbar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 12px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+#toolbar label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#toolbar input[type=color],
+#toolbar input[type=range],
+#toolbar button {
+  width: 120px;
+}
+
+#toolbar button {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#toolbar button:hover {
+  background: #555;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  #toolbar {
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 6px;
+    padding: 10px;
+  }
+
+  #toolbar label {
+    display: none;
+  }
+
+  #toolbar input[type=color],
+  #toolbar input[type=range] {
+    width: 70px;
+  }
+
+  #toolbar button {
+    padding: 6px;
+    font-size: 12px;
+  }
 }
