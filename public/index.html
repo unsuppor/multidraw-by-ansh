@@ -6,58 +6,66 @@
   <title>ANSH - Neon MultiDraw</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-
-  <!-- Neon header -->
   <header id="neonHeader">
     <div class="logo">ANSH</div>
     <div class="byline">Developed by <span class="neonName">SeaWave</span></div>
   </header>
 
-  <!-- Left Neon Toolbox -->
-  <aside id="toolbox" class="neon-panel">
-    <div class="tool-group">
-      <button class="tool-btn active" data-tool="brush">
-        <span class="icon">✒</span><small>Brush</small>
-      </button>
-      <button class="tool-btn" data-tool="eraser">
-        <span class="icon">⌫</span><small>Eraser</small>
-      </button>
-      <button class="tool-btn" data-tool="fill">
-        <span class="icon">🪣</span><small>Fill</small>
-      </button>
+  <!-- Floating FAB (opens toolbox) -->
+  <button id="fab" aria-label="Tools" title="Tools">✦</button>
+
+  <!-- Tool panel (hidden until FAB clicked) -->
+  <div id="toolPanel" class="panel-hidden" role="dialog" aria-hidden="true">
+    <div class="panel-inner">
+      <div class="panel-row">
+        <button class="tool-btn active" data-tool="brush" title="Brush">✒</button>
+        <button class="tool-btn" data-tool="eraser" title="Eraser">⌫</button>
+        <button class="tool-btn" data-tool="fill" title="Fill">🪣</button>
+      </div>
+
+      <div class="panel-row">
+        <label>Color</label>
+        <input id="colorPicker" type="color" value="#ff2d55">
+      </div>
+
+      <div class="panel-row">
+        <label>Brush</label>
+        <input id="brushSize" type="range" min="1" max="80" value="8">
+      </div>
+
+      <div class="panel-row">
+        <label>BG</label>
+        <input id="bgColor" type="color" value="#0a0a0a">
+      </div>
+
+      <div class="panel-row actions">
+        <button id="clearBtn" class="action-btn">Clear</button>
+        <button id="downloadBtn" class="action-btn">Save</button>
+      </div>
+
+      <div class="panel-footer">
+        <small>Keys: B Brush • E Eraser • F Fill</small>
+      </div>
     </div>
-
-    <div class="tool-group">
-      <label class="tool-label">Color</label>
-      <input id="colorPicker" type="color" value="#ff2d55">
-
-      <label class="tool-label">Brush Size</label>
-      <input id="brushSize" type="range" min="1" max="80" value="8">
-    </div>
-
-    <div class="tool-group">
-      <label class="tool-label">BG Color</label>
-      <input id="bgColor" type="color" value="#0a0a0a">
-
-      <button id="clearBtn" class="action-btn">Clear</button>
-      <button id="downloadBtn" class="action-btn">Save</button>
-    </div>
-  </aside>
+  </div>
 
   <!-- Canvas -->
   <canvas id="board"></canvas>
 
-  <!-- Bottom Chat Overlay -->
-  <div id="chatOverlay" class="neon-chat">
-    <div id="messages"></div>
+  <!-- Chat bubble (floating) -->
+  <button id="chatBubble" title="Chat">💬</button>
 
-    <form id="chatForm">
-      <input id="nameInput" placeholder="Your name" maxlength="18" />
-      <input id="msgInput" placeholder="Type a message..." autocomplete="off" />
-      <button type="submit">Send</button>
-    </form>
+  <!-- Chat panel (hidden until chatBubble clicked) -->
+  <div id="chatPanel" class="panel-hidden" aria-hidden="true">
+    <div class="chat-inner">
+      <div id="messages" class="messages"></div>
+      <form id="chatForm" class="chat-form">
+        <input id="nameInput" placeholder="Name" maxlength="18" />
+        <input id="msgInput" placeholder="Message..." autocomplete="off" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
