@@ -1,76 +1,60 @@
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: sans-serif;
+/* Neon Futuristic Theme - Reddish */
+:root{
+  --bg:#07060a;
+  --panel: rgba(17,6,12,0.55);
+  --neon-1: #ff2d55; /* primary red/pink */
+  --neon-2: #ff7a59;
+  --neon-glow: 0 6px 28px rgba(255,45,85,0.14), 0 2px 6px rgba(255,122,89,0.06);
+  --glass: rgba(255,255,255,0.04);
+  --muted: rgba(255,255,255,0.6);
 }
 
-#board {
-  background: white;
-  display: block;
-  touch-action: none;   /* prevents scrolling while drawing */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,#050407 0%, #0b0810 100%);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#fff;overflow:hidden}
+#board{display:block;width:100vw;height:100vh;touch-action:none;cursor:crosshair;background:var(--bg)}
+
+/* Header */
+#neonHeader{
+  position:fixed;left:50%;transform:translateX(-50%);top:14px;z-index:30;
+  display:flex;gap:18px;align-items:center;padding:8px 18px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+  box-shadow:var(--neon-glow);
+  border:1px solid rgba(255,255,255,0.03);
 }
+.logo{font-weight:800;letter-spacing:2px}
+.logo span{color:var(--neon-1);text-shadow:0 6px 18px rgba(255,45,85,0.22)}
+.byline{opacity:0.9;font-size:13px}
+.neonName{color:var(--neon-2);text-shadow:0 8px 36px rgba(255,122,89,0.18);font-weight:700}
 
-/* Floating toolbar */
-#toolbar {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  padding: 12px;
-  background: rgba(255,255,255,0.85);
-  border-radius: 10px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 10;
-}
+/* Left toolbox */
+#toolbox{position:fixed;left:16px;top:80px;z-index:25;width:120px;padding:12px;border-radius:16px;background:var(--panel);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.tool-group{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.tool-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;box-shadow:none}
+.tool-btn .icon{font-size:18px}
+.tool-btn small{font-size:11px;opacity:0.85}
+.tool-btn:hover{transform:translateY(-4px);box-shadow:var(--neon-glow);}
+.tool-btn.active{background:linear-gradient(45deg,rgba(255,45,85,0.06),rgba(255,122,89,0.04));color:#fff;border:1px solid rgba(255,45,85,0.18);box-shadow:0 6px 24px rgba(255,45,85,0.12)}
 
-#toolbar label {
-  font-size: 14px;
-  font-weight: bold;
-}
+.tool-label{font-size:12px;color:rgba(255,255,255,0.85);margin-bottom:4px}
+input[type=color]{width:100%;height:36px;border-radius:8px;border:none;padding:0;cursor:pointer}
+input[type=range]{width:100%}
+.action-btn{padding:8px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--neon-1),var(--neon-2));color:#fff;cursor:pointer;box-shadow:var(--neon-glow)}
 
-#toolbar input[type=color],
-#toolbar input[type=range],
-#toolbar button {
-  width: 120px;
-}
+/* Footer tiny */
+.tool-footer{font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px}
 
-#toolbar button {
-  padding: 8px;
-  border: none;
-  border-radius: 6px;
-  background: #333;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-}
+/* Chat overlay bottom */
+.neon-chat{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:30;width:min(920px,96%);max-width:calc(100% - 40px);background:linear-gradient(180deg,rgba(10,8,12,0.8),rgba(6,5,8,0.6));border-radius:14px;padding:8px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:8px;box-shadow:var(--neon-glow)}
+#messages{height:110px;overflow:auto;padding:8px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);display:flex;flex-direction:column;gap:6px}
+.msg{padding:8px 10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,45,85,0.05),rgba(255,122,89,0.03));border:1px solid rgba(255,45,85,0.06);font-size:14px}
+.msg .who{font-weight:700;margin-right:8px;color:#fff}
+#chatForm{display:flex;gap:8px;align-items:center}
+#chatForm input[type=text], #chatForm input[type=search], #nameInput, #msgInput{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:8px;color:#fff;outline:none}
+#chatForm input::placeholder{color:rgba(255,255,255,0.4)}
+#chatForm button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:#fff;cursor:pointer}
 
-#toolbar button:hover {
-  background: #555;
-}
-
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  #toolbar {
-    left: 50%;
-    transform: translateX(-50%);
-    flex-direction: row;
-    gap: 6px;
-    padding: 10px;
-  }
-
-  #toolbar label {
-    display: none;
-  }
-
-  #toolbar input[type=color],
-  #toolbar input[type=range] {
-    width: 70px;
-  }
-
-  #toolbar button {
-    padding: 6px;
-    font-size: 12px;
-  }
+@media (max-width:700px){
+  #toolbox{left:8px;top:70px;width:108px}
+  #neonHeader{top:8px;padding:6px 12px}
+  .neon-chat{width:calc(100% - 28px);bottom:10px}
+  #messages{height:90px}
 }
