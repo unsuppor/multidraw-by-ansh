@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -7,17 +8,30 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Serve frontend files
 app.use(express.static(path.join(__dirname, "public")));
 
-// When a user connects
 io.on("connection", (socket) => {
-  console.log("A user connected:", socket.id);
+  console.log("User connected:", socket.id);
 
-  // Receive drawing data from one user
   socket.on("draw", (data) => {
-    // Send to all other users
     socket.broadcast.emit("draw", data);
+  });
+
+  socket.on("clear", () => {
+    socket.broadcast.emit("clear");
+  });
+
+  socket.on("bg", (data) => {
+    socket.broadcast.emit("bg", data);
+  });
+
+  socket.on("fill", (data) => {
+    socket.broadcast.emit("fill", data);
+  });
+
+  // CHAT SYSTEM
+  socket.on("chat", (msg) => {
+    io.emit("chat", msg); // send to all users
   });
 
   socket.on("disconnect", () => {
@@ -25,7 +39,7 @@ io.on("connection", (socket) => {
   });
 });
 
-// IMPORTANT: For global multiplayer
-server.listen(3000, "0.0.0.0", () => {
-  console.log("Server running on port 3000");
-});
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, "0.0.0.0", () =>
+  console.log("Server running on port", PORT)
+);
